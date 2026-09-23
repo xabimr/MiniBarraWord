@@ -17,8 +17,11 @@ aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúscul
    Privacidad y seguridad* → **Abrir igualmente**.
 4. Concede los permisos (ver abajo). Aparecerá un icono «Aa» en la barra de menús.
 
-Fuente · Tamaño · N K S · Color de fuente · Resaltado · Copiar formato · Viñetas/numeración ·
-Estilos · Nuevo comentario · Borrar formato · ⋯ (Cortar, Copiar, Pegar solo texto, Fuente…, Párrafo…)
+Misma disposición que la minibarra de Word para Windows:
+
+- **Fila 1:** fuente · tamaño · aumentar/reducir tamaño · copiar formato
+- **Fila 2:** N K S · resaltado · color de fuente · viñetas · numeración
+- **Botones grandes:** Estilos · Nuevo comentario
 
 - Copiar formato: un clic lo aplica una vez; doble clic lo deja activo hasta pulsar Esc.
 - El icono de la barra de menús permite desactivarla, abrirla al iniciar sesión, etc.

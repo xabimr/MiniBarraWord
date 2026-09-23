@@ -40,6 +40,21 @@ enum Icons {
         }
     }
 
+    /// "A" con una flecha pequeña arriba o abajo (aumentar/reducir fuente).
+    static func fontStep(up: Bool) -> NSImage {
+        let caret = symbol(up ? "chevron.up" : "chevron.down", size: 7, weight: .bold)
+        return NSImage(size: NSSize(width: 22, height: 22), flipped: false) { rect in
+            let font = NSFont.systemFont(ofSize: up ? 17 : 13, weight: .regular)
+            let s = NSAttributedString(string: "A", attributes: [.font: font, .foregroundColor: NSColor.labelColor])
+            let size = s.size()
+            s.draw(at: NSPoint(x: up ? 2 : 4, y: 2))
+            let tinted = tinted(caret, .labelColor)
+            tinted.draw(in: NSRect(x: (up ? 2 : 4) + size.width, y: rect.height - caret.size.height - (up ? 3 : 6),
+                                   width: caret.size.width, height: caret.size.height))
+            return true
+        }
+    }
+
     /// Rotulador con una barra de color debajo (resaltado). nil = sin color.
     static func highlighter(_ color: NSColor?) -> NSImage {
         let pen = symbol("highlighter", size: 13, fallback: "pencil.tip")

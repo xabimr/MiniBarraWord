@@ -55,77 +55,85 @@ final class Toolbar: NSObject {
 
     // MARK: - Construcción
 
+    /// Disposición como la minibarra de Word para Windows: dos filas de controles
+    /// a la izquierda y dos botones grandes (Estilos, Nuevo comentario) a la derecha.
     private func buildUI() {
         let letters = Icons.formatLetters
 
-        fontButton = BarButton(text: NSAttributedString(string: ""), width: 150, chevron: true, tooltip: "Fuente")
+        // Fila 1: fuente, tamaño, aumentar/reducir y copiar formato.
+        fontButton = BarButton(text: NSAttributedString(string: ""), width: 150, chevron: true, bordered: true, tooltip: "Fuente")
         fontButton.onClick = { [unowned self] _ in fontButton.popUp(makeFontMenu()) }
 
-        sizeButton = BarButton(text: NSAttributedString(string: ""), width: 60, chevron: true, tooltip: "Tamaño de fuente")
+        sizeButton = BarButton(text: NSAttributedString(string: ""), width: 56, chevron: true, bordered: true, tooltip: "Tamaño de fuente")
         sizeButton.onClick = { [unowned self] _ in sizeButton.popUp(makeSizeMenu()) }
 
-        boldButton = BarButton(text: Icons.letter(letters.bold, bold: true), width: 32, tooltip: "Negrita (⌘B)")
+        let growButton = BarButton(image: Icons.fontStep(up: true), width: 30, tooltip: "Aumentar tamaño de fuente")
+        growButton.onClick = { [unowned self] _ in stepSize(+1) }
+
+        let shrinkButton = BarButton(image: Icons.fontStep(up: false), width: 30, tooltip: "Reducir tamaño de fuente")
+        shrinkButton.onClick = { [unowned self] _ in stepSize(-1) }
+
+        painterButton = BarButton(image: Icons.symbol("paintbrush.pointed", size: 14, fallback: "paintbrush"),
+                                  width: 30, tooltip: "Copiar formato (doble clic para aplicarlo varias veces)")
+        painterButton.onClick = { [unowned self] e in togglePainter(e) }
+
+        // Fila 2: N K S, resaltado, color, viñetas y numeración.
+        boldButton = BarButton(text: Icons.letter(letters.bold, bold: true), width: 28, tooltip: "Negrita (⌘B)")
         boldButton.onClick = { [unowned self] _ in perform { word.toggleBold() } }
 
-        italicButton = BarButton(text: Icons.letter(letters.italic, italic: true), width: 32, tooltip: "Cursiva (⌘I)")
+        italicButton = BarButton(text: Icons.letter(letters.italic, italic: true), width: 28, tooltip: "Cursiva (⌘I)")
         italicButton.onClick = { [unowned self] _ in perform { word.toggleItalic() } }
 
-        underlineButton = BarButton(text: Icons.letter(letters.underline, underline: true), width: 32, tooltip: "Subrayado (⌘U)")
+        underlineButton = BarButton(text: Icons.letter(letters.underline, underline: true), width: 28, tooltip: "Subrayado (⌘U)")
         underlineButton.onClick = { [unowned self] _ in perform { word.toggleUnderline() } }
 
-        colorButton = BarButton(image: Icons.fontColor(Settings.fontColor), width: 30, tooltip: "Color de fuente")
-        colorButton.onClick = { [unowned self] _ in applyFontColor(Settings.fontColor) }
-        let colorMenuButton = chevronButton(tooltip: "Más colores de fuente")
-        colorMenuButton.onClick = { [unowned self] _ in colorMenuButton.popUp(makeFontColorMenu()) }
-
-        highlightButton = BarButton(image: Icons.highlighter(currentHighlight?.color), width: 30, tooltip: "Color de resaltado")
+        highlightButton = BarButton(image: Icons.highlighter(currentHighlight?.color), width: 28, tooltip: "Color de resaltado")
         highlightButton.onClick = { [unowned self] _ in applyHighlight(currentHighlight) }
         let highlightMenuButton = chevronButton(tooltip: "Más colores de resaltado")
         highlightMenuButton.onClick = { [unowned self] _ in highlightMenuButton.popUp(makeHighlightMenu()) }
 
-        painterButton = BarButton(image: Icons.symbol("paintbrush.pointed", size: 14, fallback: "paintbrush"),
-                                  width: 32, tooltip: "Copiar formato (doble clic para aplicarlo varias veces)")
-        painterButton.onClick = { [unowned self] e in togglePainter(e) }
+        colorButton = BarButton(image: Icons.fontColor(Settings.fontColor), width: 28, tooltip: "Color de fuente")
+        colorButton.onClick = { [unowned self] _ in applyFontColor(Settings.fontColor) }
+        let colorMenuButton = chevronButton(tooltip: "Más colores de fuente")
+        colorMenuButton.onClick = { [unowned self] _ in colorMenuButton.popUp(makeFontColorMenu()) }
 
-        let bulletsButton = BarButton(image: Icons.symbol("list.bullet", size: 15), width: 30, tooltip: "Viñetas")
+        let bulletsButton = BarButton(image: Icons.symbol("list.bullet", size: 15), width: 28, tooltip: "Viñetas")
         bulletsButton.onClick = { [unowned self] _ in perform { word.toggleBullets() } }
-        let listMenuButton = chevronButton(tooltip: "Opciones de lista")
-        listMenuButton.onClick = { [unowned self] _ in listMenuButton.popUp(makeListMenu()) }
+        let bulletsMenuButton = chevronButton(tooltip: "Opciones de lista")
+        bulletsMenuButton.onClick = { [unowned self] _ in bulletsMenuButton.popUp(makeListMenu()) }
 
-        let stylesButton = BarButton(image: Icons.symbol("textformat", size: 14), width: 46, chevron: true, tooltip: "Estilos")
+        let numberingButton = BarButton(image: Icons.symbol("list.number", size: 15), width: 28, tooltip: "Numeración")
+        numberingButton.onClick = { [unowned self] _ in perform { word.toggleNumbering() } }
+        let numberingMenuButton = chevronButton(tooltip: "Opciones de lista")
+        numberingMenuButton.onClick = { [unowned self] _ in numberingMenuButton.popUp(makeListMenu()) }
+
+        // Botones grandes.
+        let stylesButton = BarButton(image: Icons.symbol("textformat", size: 21), caption: "Estilos",
+                                     width: 66, height: 60, chevron: true, tooltip: "Estilos")
         stylesButton.onClick = { [unowned self] _ in stylesButton.popUp(makeStyleMenu()) }
 
-        let commentButton = BarButton(image: Icons.symbol("plus.bubble", size: 15, fallback: "text.bubble"),
-                                      width: 34, tooltip: "Nuevo comentario")
+        let commentButton = BarButton(image: Icons.symbol("plus.bubble", size: 21, fallback: "text.bubble"),
+                                      caption: "Nuevo comentario", width: 84, height: 60, tooltip: "Nuevo comentario")
         commentButton.onClick = { [unowned self] _ in newComment() }
 
-        let clearButton = BarButton(image: Icons.symbol("eraser", size: 14, fallback: "clear"),
-                                    width: 32, tooltip: "Borrar formato")
-        clearButton.onClick = { [unowned self] _ in perform { word.clearFormatting() } }
+        let row1 = Self.row([fontButton, sizeButton, growButton, shrinkButton, painterButton], spacing: 3)
+        let row2 = Self.row([boldButton, italicButton, underlineButton,
+                             highlightButton, highlightMenuButton, colorButton, colorMenuButton,
+                             bulletsButton, bulletsMenuButton, numberingButton, numberingMenuButton], spacing: 1)
+        let rows = NSStackView(views: [row1, row2])
+        rows.orientation = .vertical
+        rows.alignment = .leading
+        rows.spacing = 3
 
-        let moreButton = BarButton(image: Icons.symbol("ellipsis", size: 14), width: 28, tooltip: "Más opciones")
-        moreButton.onClick = { [unowned self] _ in moreButton.popUp(makeMoreMenu()) }
-
-        let views: [NSView] = [
-            fontButton, sizeButton, BarSeparator(),
-            boldButton, italicButton, underlineButton, BarSeparator(),
-            colorButton, colorMenuButton, highlightButton, highlightMenuButton, painterButton, BarSeparator(),
-            bulletsButton, listMenuButton, BarSeparator(),
-            stylesButton, BarSeparator(),
-            commentButton, clearButton, moreButton,
-        ]
-        let stack = NSStackView(views: views)
-        stack.orientation = .horizontal
-        stack.spacing = 1
+        let stack = Self.row([rows, BarSeparator(height: 60), stylesButton, BarSeparator(height: 60), commentButton], spacing: 2)
         stack.edgeInsets = NSEdgeInsets(top: 5, left: 6, bottom: 5, right: 6)
-        stack.alignment = .centerY
 
         let background = NSVisualEffectView()
         background.material = .popover
         background.state = .active
         background.blendingMode = .behindWindow
         background.wantsLayer = true
-        background.layer?.cornerRadius = 10
+        background.layer?.cornerRadius = 8
         background.layer?.masksToBounds = true
         background.layer?.borderWidth = 0.5
         background.layer?.borderColor = NSColor.separatorColor.cgColor
@@ -142,8 +150,16 @@ final class Toolbar: NSObject {
         panel.setContentSize(stack.fittingSize)
     }
 
+    private static func row(_ views: [NSView], spacing: CGFloat) -> NSStackView {
+        let stack = NSStackView(views: views)
+        stack.orientation = .horizontal
+        stack.alignment = .centerY
+        stack.spacing = spacing
+        return stack
+    }
+
     private func chevronButton(tooltip: String) -> BarButton {
-        BarButton(image: Icons.symbol("chevron.down", size: 9, weight: .semibold), width: 16, tooltip: tooltip)
+        BarButton(image: Icons.symbol("chevron.down", size: 8, weight: .semibold), width: 14, tooltip: tooltip)
     }
 
     // MARK: - Mostrar y ocultar
@@ -459,30 +475,6 @@ final class Toolbar: NSObject {
         default: break
         }
         return NSAttributedString(string: name, attributes: [.font: font, .foregroundColor: color])
-    }
-
-    private func makeMoreMenu() -> NSMenu {
-        let menu = NSMenu()
-        let trusted = Keyboard.isTrusted
-        let cut = item("Cortar", image: Icons.symbol("scissors", size: 13)) { [unowned self] in hide(); Keyboard.cut() }
-        let copy = item("Copiar", image: Icons.symbol("doc.on.doc", size: 13)) { [unowned self] in hide(); Keyboard.copy() }
-        let paste = item("Pegar solo texto", image: Icons.symbol("doc.on.clipboard", size: 13)) { [unowned self] in
-            guard let text = NSPasteboard.general.string(forType: .string) else { return }
-            hide()
-            word.typeText(text)
-        }
-        paste.isEnabled = NSPasteboard.general.string(forType: .string) != nil
-        let font = item("Fuente…", image: Icons.symbol("textformat.size", size: 13)) { [unowned self] in hide(); Keyboard.fontDialog() }
-        let paragraph = item("Párrafo…", image: Icons.symbol("text.alignleft", size: 13)) { [unowned self] in hide(); Keyboard.paragraphDialog() }
-        for i in [cut, copy, font, paragraph] { i.isEnabled = trusted }
-        [cut, copy, paste, .separator(), font, paragraph].forEach(menu.addItem)
-        if !trusted {
-            menu.addItem(.separator())
-            let info = NSMenuItem(title: "Algunas opciones necesitan permiso de Accesibilidad", action: nil, keyEquivalent: "")
-            info.isEnabled = false
-            menu.addItem(info)
-        }
-        return menu
     }
 }
 
