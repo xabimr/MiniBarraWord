@@ -1,6 +1,6 @@
 #!/bin/zsh
 # Compila MiniBarra (universal: Apple Silicon + Intel), monta el paquete .app y lo firma (ad hoc).
-#   ./build.sh             solo compila en build/MiniBarra.app
+#   ./build.sh             solo compila (~/Library/Caches/MiniBarra-build/MiniBarra.app)
 #   ./build.sh --install   además la instala en ~/Applications
 #   ./build.sh --dmg       además crea build/MiniBarra-<versión>.dmg para distribuirla
 set -euo pipefail
@@ -10,7 +10,9 @@ ARCHS=(--arch arm64 --arch x86_64)
 swift build -c release $ARCHS
 BIN="$(swift build -c release $ARCHS --show-bin-path)/MiniBarra"
 
-APP="build/MiniBarra.app"
+# El paquete se monta fuera de iCloud Drive: sus metadatos extendidos hacen fallar codesign.
+APP="$HOME/Library/Caches/MiniBarra-build/MiniBarra.app"
+mkdir -p build
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/MiniBarra"
