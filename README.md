@@ -3,8 +3,6 @@
 Barra flotante de formato para Microsoft Word en macOS, como la de Word para la web:
 aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúsculas + clic).
 
-![MiniBarra en Word para Mac](docs/captura.png)
-
 ![La barra de formato sobre el texto seleccionado](docs/barra.png)
 
 ## Instalar (sin compilar nada)
