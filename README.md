@@ -23,6 +23,8 @@ Misma disposición que la minibarra de Word para Windows:
 
 - Copiar formato: un clic lo aplica una vez; doble clic lo deja activo hasta pulsar Esc.
 - El icono de la barra de menús permite desactivarla, abrirla al iniciar sesión, etc.
+- ¿No quieres el icono «Aa» en la barra de menús? Elige *Ocultar icono de la barra de menús…*.
+  La barra sigue funcionando; para recuperar el icono, vuelve a abrir MiniBarra desde Aplicaciones o Spotlight.
 
 ## Permisos
 - **Automatización → Microsoft Word**: se pide la primera vez (aplicar formato vía AppleScript).

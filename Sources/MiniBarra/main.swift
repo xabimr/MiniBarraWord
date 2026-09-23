@@ -42,8 +42,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         menu.delegate = self
         statusItem.menu = menu
+        statusItem.isVisible = !Settings.hideMenuBarIcon
 
         if !Keyboard.isTrusted { Keyboard.requestTrust() }
+    }
+
+    /// Abrir la app de nuevo (desde Aplicaciones o Spotlight) vuelve a mostrar el icono.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        Settings.hideMenuBarIcon = false
+        statusItem.isVisible = true
+        return false
+    }
+
+    private func hideMenuBarIcon() {
+        NSApp.activate(ignoringOtherApps: true)
+        let alert = NSAlert()
+        alert.messageText = "¿Ocultar el icono de la barra de menús?"
+        alert.informativeText = "MiniBarra seguirá funcionando en Word. Para recuperar el icono, vuelve a abrir MiniBarra desde Aplicaciones o Spotlight."
+        alert.addButton(withTitle: "Ocultar")
+        alert.addButton(withTitle: "Cancelar")
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
+        Settings.hideMenuBarIcon = true
+        statusItem.isVisible = false
     }
 }
 
@@ -88,6 +108,10 @@ extension AppDelegate: NSMenuDelegate {
                 NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
             })
         }
+        menu.addItem(.separator())
+        menu.addItem(ClosureMenuItem(title: "Ocultar icono de la barra de menús…") { [unowned self] in
+            DispatchQueue.main.async { self.hideMenuBarIcon() }
+        })
         menu.addItem(.separator())
         menu.addItem(ClosureMenuItem(title: "Salir de MiniBarra") { NSApp.terminate(nil) })
     }

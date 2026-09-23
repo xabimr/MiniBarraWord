@@ -34,6 +34,12 @@ enum Settings {
         set { defaults.set(newValue, forKey: "highlightTerm") }
     }
 
+    /// Oculta el icono «Aa» de la barra de menús. Se recupera abriendo la app otra vez.
+    static var hideMenuBarIcon: Bool {
+        get { defaults.bool(forKey: "hideMenuBarIcon") }
+        set { defaults.set(newValue, forKey: "hideMenuBarIcon") }
+    }
+
     static var recentFonts: [String] {
         get { defaults.stringArray(forKey: "recentFonts") ?? [] }
         set { defaults.set(Array(newValue.prefix(8)), forKey: "recentFonts") }
