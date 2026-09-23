@@ -3,6 +3,8 @@
 Barra flotante de formato para Microsoft Word en macOS, como la de Word para la web:
 aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúsculas + clic).
 
+![MiniBarra en Word para Mac](docs/captura.png)
+
 Fuente · Tamaño · N K S · Color de fuente · Resaltado · Copiar formato · Viñetas/numeración ·
 Estilos · Nuevo comentario · Borrar formato · ⋯ (Cortar, Copiar, Pegar solo texto, Fuente…, Párrafo…)
 
@@ -21,3 +23,8 @@ La app se firma ad hoc: después de recompilar hay que volver a activar Accesibi
     ./build.sh --install      # compila, firma e instala en ~/Applications
     .build/release/MiniBarra --check            # valida los AppleScript sin ejecutarlos
     .build/release/MiniBarra --preview /tmp/b   # captura de la barra (claro/oscuro)
+
+---
+
+> **Aviso:** esta app está hecha con [Claude](https://claude.ai) (Claude Code). Es un proyecto
+> *vibe coding*: se ofrece tal cual, sin garantías, y no está afiliada a Microsoft ni a Anthropic.
