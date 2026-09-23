@@ -5,6 +5,8 @@ aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúscul
 
 ![MiniBarra en Word para Mac](docs/captura.png)
 
+![La barra de formato sobre el texto seleccionado](docs/barra.png)
+
 ## Instalar (sin compilar nada)
 
 1. Descarga **[MiniBarra-1.0.dmg](https://github.com/xabimr/MiniBarraWord/releases/latest/download/MiniBarra-1.0.dmg)**
