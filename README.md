@@ -5,6 +5,16 @@ aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúscul
 
 ![MiniBarra en Word para Mac](docs/captura.png)
 
+## Instalar (sin compilar nada)
+
+1. Descarga **[MiniBarra-1.0.dmg](https://github.com/xabimr/MiniBarraWord/releases/latest/download/MiniBarra-1.0.dmg)**
+   (Apple Silicon e Intel, macOS 14 o posterior).
+2. Ábrelo y arrastra **MiniBarra** a **Aplicaciones**.
+3. **Primera apertura:** la app no está firmada por un desarrollador de Apple, así que macOS
+   la bloquea. Ábrela una vez, pulsa «Aceptar» en el aviso y ve a *Ajustes del Sistema →
+   Privacidad y seguridad* → **Abrir igualmente**.
+4. Concede los permisos (ver abajo). Aparecerá un icono «Aa» en la barra de menús.
+
 Fuente · Tamaño · N K S · Color de fuente · Resaltado · Copiar formato · Viñetas/numeración ·
 Estilos · Nuevo comentario · Borrar formato · ⋯ (Cortar, Copiar, Pegar solo texto, Fuente…, Párrafo…)
 

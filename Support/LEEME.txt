@@ -1,0 +1,27 @@
+MiniBarra para Word — instalación
+=================================
+
+1. Arrastra MiniBarra.app a la carpeta Aplicaciones.
+
+2. Primera apertura. La app no está firmada por un desarrollador de Apple,
+   así que macOS la bloquea la primera vez:
+   - Abre MiniBarra (doble clic). Aparecerá un aviso: pulsa «Aceptar».
+   - Ve a Ajustes del Sistema → Privacidad y seguridad, baja hasta el final
+     y pulsa «Abrir igualmente» junto a MiniBarra. Confirma con tu contraseña.
+
+3. Permisos (solo la primera vez):
+   - Accesibilidad: Ajustes del Sistema → Privacidad y seguridad →
+     Accesibilidad → activa MiniBarra.
+   - Controlar Microsoft Word: la primera vez que selecciones texto en Word,
+     macOS preguntará si MiniBarra puede controlar Word. Pulsa «Permitir».
+
+4. Listo. Verás un icono «Aa» en la barra de menús. Selecciona texto en Word
+   (arrastrando o con doble clic) y aparecerá la barra de formato.
+   Desde el icono «Aa» puedes hacer que se abra al iniciar sesión.
+
+Requisitos: macOS 14 o posterior y Microsoft Word para Mac.
+
+Esta app está hecha con Claude (Claude Code). Es un proyecto «vibe coding»:
+se ofrece tal cual, sin garantías, y no está afiliada a Microsoft ni a Anthropic.
+
+https://github.com/xabimr/MiniBarraWord
