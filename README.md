@@ -9,7 +9,7 @@ aparece al seleccionar texto (arrastrando, con doble/triple clic o con mayúscul
 
 ## Instalar (sin compilar nada)
 
-1. Descarga **[MiniBarra-1.0.dmg](https://github.com/xabimr/MiniBarraWord/releases/latest/download/MiniBarra-1.0.dmg)**
+1. Descarga **[MiniBarra-1.1.dmg](https://github.com/xabimr/MiniBarraWord/releases/latest/download/MiniBarra-1.1.dmg)**
    (Apple Silicon e Intel, macOS 14 o posterior).
 2. Ábrelo y arrastra **MiniBarra** a **Aplicaciones**.
 3. **Primera apertura:** la app no está firmada por un desarrollador de Apple, así que macOS
